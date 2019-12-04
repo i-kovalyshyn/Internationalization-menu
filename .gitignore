@@ -1,0 +1,5 @@
+.idea/
+target/
+task09_string.iml
+log/
+$(log-path)/

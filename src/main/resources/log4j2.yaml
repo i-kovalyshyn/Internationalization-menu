@@ -1,0 +1,57 @@
+Configuration:
+  packages: "edu.kovalyshyn.task09"
+  name: Log4j2_config
+  properties:
+    property:
+      name: log-path
+      value: log
+  #-----------------------------------------------------------------
+  appenders:
+    Console:
+      name: Consol_Appender
+      PatternLayout:
+        Pattern: "%highlight{%-5level}{FATAL=bg_red} %style{%date{yyyy-MM-dd HH:mm:ss.SSS}}{blue} %class{1}:%L - %highlight{%msg} %xEx{short}%n"
+
+
+
+    RollingFile:
+      - name: rootLogFile
+        fileName: ${log-path}/rootFile.log
+        filePattern: ${log-path}/archive/rolFile2.log.%d{yyyy-MM-dd-hh-mm}.gz
+        PatternLayout:
+          Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %class{1}:%L - %msg %xEx{short}%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 350 kB
+
+  #----------------------------------------------------------------------
+  Loggers:
+    Root:
+      level: all
+      AppenderRef:
+        - ref: rootLogFile
+          level: all
+
+
+    Logger:
+      - name: edu.kovalyshyn.Application
+        level: all
+        AppenderRef:
+          - ref: rootLogFile
+            level: all
+          - ref: Consol_Appender
+            level: all
+
+      - name: edu.kovalyshyn.view.MyView
+        level: all
+        AppenderRef:
+          - ref: Consol_Appender
+            level: all
+
+      - name: edu.kovalyshyn.model.ModelImpl
+        level: all
+        AppenderRef:
+          - ref: Consol_Appender
+            level: all
+
+
